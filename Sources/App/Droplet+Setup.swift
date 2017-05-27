@@ -2,7 +2,7 @@
 
 extension Droplet {
   public func setup() throws {
-    _ = TrackerDataController(drop: self)
+    _ = TrackerDataController(self)
     
     let routes = Routes(view)
     try collection(routes)

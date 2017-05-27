@@ -10,38 +10,16 @@ import Foundation
 import Vapor
 import HTTP
 
-final class TrackerDataController {
+final class TrackerDataController: DropletInitializable {
   private let dataURL: String = "https://raw.githubusercontent.com/TrumpTracker/trumptracker.github.io/master/_data/data.json"
   let drop: Droplet!
   
-  init(drop: Droplet) {
+  init(_ drop: Droplet) {
     self.drop = drop
     self.addRoutes(self.drop)
   }
   
-  private func makeDataRequest() {
-  
-    let request = URLRequest(url: URL(string: dataURL)!)
-    let session = URLSession(configuration: .default)
-    
-    session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-      
-      guard
-        let validData = data,
-        let validJSON = try? JSONSerialization.jsonObject(with: validData, options: .mutableLeaves) else {
-          return
-      }
-      
-      guard let unpackedJSON = validJSON as? [String: AnyObject] else {
-        return
-      }
-      
-    }.resume()
-    
-  }
-  
-  
-  func addRoutes(_ drop: Droplet) {
+  private func addRoutes(_ drop: Droplet) {
     drop.get("/data", handler: getData)
   }
   
