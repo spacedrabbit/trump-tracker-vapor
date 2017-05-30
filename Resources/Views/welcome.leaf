@@ -1,6 +1,6 @@
 #extend("base")
 
-#export("title") { It works }
+#export("title") { Trump Tracking with Vapor }
 
 #export("content") {
 
@@ -9,6 +9,7 @@
 
       <div class="two column"></div>
       <div class="eight column">
+        <!-- TABLE -->
         <table>
 
           <thead>
@@ -17,7 +18,7 @@
             </tr>
           </thead>
 
-
+          <tbody>
           #loop(promises, "promise"){
           <tr>
             <td>#(promise.title)</td>
@@ -25,14 +26,16 @@
             <td>#(promise.status)</td>
           </tr>
           }
-        </table>
+          </tbody>
 
+        </table>
+      <!-- END TABLE -->
 
       </div>
       <div class="two column"></div>
 
-    </div> <!-- row -->
-  </div> <!-- container -->
+    </div> <!-- END ROW -->
+  </div> <!-- END CONTAINER -->
 
 }
 

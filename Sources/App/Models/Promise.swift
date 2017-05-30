@@ -9,16 +9,6 @@
 import Foundation
 import Vapor
 
-let kTitle: String = "title"
-let kDescription: String = "description"
-let kURL: String = "url"
-let kStatus: String = "status"
-let kStatusInfo: String = "status_info"
-let kCategory: String = "category"
-let kTags: String = "tags"
-let kComments: String = "comments"
-let kSources: String = "sources"
-
 final class Promise {
   let title: String
   let description: String
@@ -29,44 +19,6 @@ final class Promise {
   let tags: [String]
   let comments: [String]
   let sources: [String]
-  
-  convenience init(json: JSON) throws {
-    guard
-      let title = json[kTitle]?.string,
-      let description = json[kDescription]?.string,
-      let url = json[kURL]?.string,
-      let status = json[kStatus]?.string,
-      let statusInfo = json[kStatusInfo]?.string,
-      let category = json[kCategory]?.string,
-      let tags = json[kTags]?.array,
-      let comments = json[kComments]?.array,
-      let sources = json[kSources]?.array
-    else {
-        throw Abort.init(.other(statusCode: 900, reasonPhrase: "Could not create Promises"))
-    }
-    
-    self.init(title: title,
-              description: description,
-              url: url,
-              status: status,
-              statusInfo: statusInfo,
-              category: category,
-              tags: tags.flatMap{ $0.string },
-              comments: comments.flatMap{ $0.string },
-              sources: sources.flatMap{ $0.string })
-    
-    /*
-    self.title = title
-    self.description = description
-    self.url = url
-    self.status = status
-    self.statusInfo = statusInfo
-    self.category = category
-    self.tags = tags.flatMap{ $0.string }
-    self.comments = comments.flatMap{ $0.string }
-    self.sources = sources.flatMap{ $0.string }
- */
-  }
   
   init(title: String, description: String, url: String,
        status: String, statusInfo: String, category: String,
@@ -84,6 +36,8 @@ final class Promise {
   }
 }
 
+
+// MARK: - Node Conversion
 extension Promise: NodeConvertible {
   
   convenience init(node: Node) throws {
@@ -103,5 +57,39 @@ extension Promise: NodeConvertible {
                             kSources : self.sources
       ])
   }
+}
+
+
+// MARK: - JSON Conversion
+extension Promise: JSONConvertible {
   
+  convenience init(json: JSON) throws {
+    guard
+      let title = json[kTitle]?.string,
+      let description = json[kDescription]?.string,
+      let url = json[kURL]?.string,
+      let status = json[kStatus]?.string,
+      let statusInfo = json[kStatusInfo]?.string,
+      let category = json[kCategory]?.string,
+      let tags = json[kTags]?.array,
+      let comments = json[kComments]?.array,
+      let sources = json[kSources]?.array
+      else {
+        throw Abort.init(.other(statusCode: 900, reasonPhrase: "Could not create Promises"))
+    }
+    
+    self.init(title: title,
+              description: description,
+              url: url,
+              status: status,
+              statusInfo: statusInfo,
+              category: category,
+              tags: tags.flatMap{ $0.string },
+              comments: comments.flatMap{ $0.string },
+              sources: sources.flatMap{ $0.string })
+  }
+  
+  func makeJSON() throws -> JSON {
+    return try JSON(node: self)
+  }
 }

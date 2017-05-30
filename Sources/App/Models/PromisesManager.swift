@@ -9,6 +9,7 @@
 import Foundation
 import Vapor
 
+// Is this not proper, should I be using fluent?
 final class PromisesManager {
   private var promises: [Promise] = []
   
