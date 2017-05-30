@@ -3,8 +3,36 @@
 #export("title") { It works }
 
 #export("content") {
-	<div class="welcome">
-		<img src="/images/it-works.png">
-	</div>
+
+  <div class="container">
+    <div class="row">
+
+      <div class="two column"></div>
+      <div class="eight column">
+        <table>
+
+          <thead>
+            <tr>
+              <th>Title</th><th>Category</th><th>Status</th>
+            </tr>
+          </thead>
+
+
+          #loop(promises, "promise"){
+          <tr>
+            <td>#(promise.title)</td>
+            <td>#(promise.category)</td>
+            <td>#(promise.status)</td>
+          </tr>
+          }
+        </table>
+
+
+      </div>
+      <div class="two column"></div>
+
+    </div> <!-- row -->
+  </div> <!-- container -->
+
 }
 

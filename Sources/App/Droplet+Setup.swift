@@ -3,8 +3,10 @@
 extension Droplet {
   public func setup() throws {
     let tracker = TrackerDataController(self)
-    tracker.requestInfo()
+    try tracker.requestInfo()
     
+    let promiseController = PromisesViewController(view: view)
+    promiseController.addRoutes(self)
     
     let routes = Routes(view)
     try collection(routes)

@@ -34,24 +34,23 @@ final class TrackerDataController: DropletInitializable {
     return json
   }
   
-  func requestInfo() {
-    do {
+  func requestInfo() throws {
+    //do {
       let response: Response = try self.drop.get("/data")
       guard
         let json = response.json,
         let promisesJSON = json["promises"]?.array
-      else { return }
-  
-      for promise in promisesJSON {
-        let newPromise = try Promises(json: promise)
-        
-        print(newPromise?.title)
+      else {
+        throw Abort.init(.other(statusCode: 901, reasonPhrase: "Request from API failed"))
       }
-    }
-    catch {
-      print("Error")
-    }
-    
-    
+      
+      PromisesManager.manager.addPromise(
+        try promisesJSON.flatMap(Promise.init(json:))
+      )
+      //PromisesManager.manager.allPromises().map{ print($0.title) }
+    //}
+  //catch {
+  //  print("Error")
+  //}
   }
 }
