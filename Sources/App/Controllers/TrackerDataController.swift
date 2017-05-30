@@ -33,4 +33,25 @@ final class TrackerDataController: DropletInitializable {
     
     return json
   }
+  
+  func requestInfo() {
+    do {
+      let response: Response = try self.drop.get("/data")
+      guard
+        let json = response.json,
+        let promisesJSON = json["promises"]?.array
+      else { return }
+  
+      for promise in promisesJSON {
+        let newPromise = try Promises(json: promise)
+        
+        print(newPromise?.title)
+      }
+    }
+    catch {
+      print("Error")
+    }
+    
+    
+  }
 }
