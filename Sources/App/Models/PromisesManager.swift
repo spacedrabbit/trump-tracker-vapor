@@ -31,4 +31,14 @@ final class PromisesManager {
   func count() -> Int {
     return self.promises.count
   }
+  
+  func promises(status: PromiseStatus) -> [Promise] {
+    return self.promises.filter{
+      if $0.status == status {
+        return true
+      }
+      return false
+    }
+  
+  }
 }

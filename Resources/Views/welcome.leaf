@@ -14,10 +14,10 @@
         </p>
       </div>
     </div>
-    <div class="row">
-
+    
     <div class="row">
       <div class="offset-by-one ten columns">
+        
         <table class="thick-border">
           <tr>
             <td>
@@ -25,26 +25,24 @@
               <h5 class="missmargins">Not Started</h5>
             </td>
             <td>
-              <h2 class="missmargins">#(not_started)</h2>
+              <h2 class="missmargins">#(in_progress)</h2>
               <h5 class="missmargins">In Progress</h5>
             </td>
             <td>
-              <h2 class="missmargins">#(not_started)</h2>
+              <h2 class="missmargins">#(acheived)</h2>
               <h5 class="missmargins">Acheived</h5>
             </td>
             <td>
-              <h2 class="missmargins">#(not_started)</h2>
+              <h2 class="missmargins">#(broken)</h2>
               <h5 class="missmargins">Broken</h5>
             </td>
             <td>
-              <h2 class="missmargins">#(not_started)</h2>
+              <h2 class="missmargins">#(compromised)</h2>
               <h5 class="missmargins">Compromised</h5>
             </td>
           </tr>
         </table>
-        
-
-       
+      
       </div>
     </div>
 

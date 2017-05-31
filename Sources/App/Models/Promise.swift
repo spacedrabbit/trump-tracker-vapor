@@ -9,13 +9,80 @@
 import Foundation
 import Vapor
 
+enum PromiseStatus {
+  case notStarted, inProgress, achieved, broken, compromised, unknown
+  
+  init(status: String) {
+    switch status {
+    case kStatusNotStarted: self = .notStarted
+    case kStatusInProgress: self = .inProgress
+    case kStatusAcheived: self = .achieved
+    case kStatusBroken: self = .broken
+    case kStatusCompromised: self = .compromised
+    default: self = .unknown
+    }
+  }
+  
+  func key() -> String {
+    switch self {
+    case .notStarted: return kStatusNotStarted
+    case .inProgress: return kStatusInProgress
+    case .achieved: return kStatusAcheived
+    case .broken: return kStatusBroken
+    case .compromised: return kStatusCompromised
+    default: return "Unknown"
+    }
+  }
+}
+
+enum PromiseCategory: String {
+  case  first100Days, culture, economy,
+        environment, government, immigration,
+        indigenous, security, health, world,
+        education, unknown
+  
+  init(category: String) {
+    switch category {
+    case kCategoryFirst100Days: self = .first100Days
+    case kCategoryCulture: self = .culture
+    case kCategoryEconomy: self = .economy
+    case kCategoryEnvironment: self = .environment
+    case kCategoryGovernment: self = .government
+    case kCategoryImmigration: self = .immigration
+    case kCategoryIndigenous: self = .indigenous
+    case kCategorySecurity: self = .security
+    case kCategoryHealth: self = .health
+    case kCategoryWorld: self = .world
+    case kCategoryEducation: self = .education
+    default: self = .unknown
+    }
+  }
+  
+  func key() -> String {
+    switch self {
+    case .first100Days: return kCategoryFirst100Days
+    case .culture: return kCategoryCulture
+    case .economy: return kCategoryEconomy
+    case .environment: return kCategoryEnvironment
+    case .government: return kCategoryGovernment
+    case .immigration: return kCategoryImmigration
+    case .indigenous: return kCategoryIndigenous
+    case .security: return kCategorySecurity
+    case .health: return kCategoryHealth
+    case .world: return kCategoryWorld
+    case .education: return kCategoryEducation
+    default: return "Unknown"
+    }
+  }
+}
+
 final class Promise {
   let title: String
   let description: String
   let url: String
-  let status: String
+  let status: PromiseStatus
   let statusInfo: String
-  let category: String
+  let category: PromiseCategory
   let tags: [String]
   let comments: [String]
   let sources: [String]
@@ -27,9 +94,9 @@ final class Promise {
     self.title = title
     self.description = description
     self.url = url
-    self.status = status
+    self.status = PromiseStatus(status: status)
     self.statusInfo = statusInfo
-    self.category = category
+    self.category = PromiseCategory(category: category)
     self.tags = tags
     self.comments = comments
     self.sources = sources
@@ -49,9 +116,9 @@ extension Promise: NodeConvertible {
                             kTitle : self.title,
                             kDescription : self.description,
                             kURL : self.url,
-                            kStatus : self.status,
+                            kStatus : self.status.key(),
                             kStatusInfo : self.statusInfo,
-                            kCategory : self.category,
+                            kCategory : self.category.key(),
                             kTags : self.tags,
                             kComments : self.comments,
                             kSources : self.sources
