@@ -27,4 +27,8 @@ final class PromisesManager {
   func allPromises() -> [Promise] {
     return self.promises
   }
+  
+  func count() -> Int {
+    return self.promises.count
+  }
 }

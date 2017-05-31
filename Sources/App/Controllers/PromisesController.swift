@@ -21,7 +21,9 @@ final class PromisesViewController {
   }
   
   func index(_ request: Request) throws -> ResponseRepresentable {
-    return try self.view.make("welcome", ["promises" : PromisesManager.manager.allPromises()])
+    return try self.view.make("welcome", ["promises" : PromisesManager.manager.allPromises(),
+                                          "total_promises" : PromisesManager.manager.count(),
+                                          "not_started" : "100"])
     //return try JSON(node: PromisesManager.manager.allPromises())
   }
   
